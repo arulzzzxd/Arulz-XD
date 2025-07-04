@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>ArulzXD Digital Marketplace</title>
+<link rel="icon" type="image/png" href="https://files.catbox.moe/nbsldh.png">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: rgba(255, 255, 255, 0.5);
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+    .video-background {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        z-index: -1;
+        transform: translate(-50%, -50%);
+    }
+    header {
+        background-image: url('https://files.catbox.moe/lpjbkv.jpeg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        color: white;
+        padding: 15px 20px;
+        text-align: center;
+        border-radius: 20px;
+        font-size: 25px;
+    }
+
+.menu {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px auto;
+    padding: 10px 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    backdrop-filter: blur(8px);
+}
+
+.menu-item {
+    padding: 10px 20px;
+    background-color: #f1f5f9;
+    color: #1f2937;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.menu-item:hover {
+    background-color: #dbeafe;
+    color: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+.menu-item.active {
+    background-color: #000;
+    color: #fff;
+    font-weight: bold;
+}
+
+    .button {
+padding: 8px 15px;
+background-color: #28a745;
+color: black;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+transition: background-color 0.3s;
+display: flex;
+align-items: center;
+justify-content: center;
+margin: 15px auto 0 auto;
+text-align: center;
+}
+.button:hover {
+background-color: #218838;
+}
+   .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    .modal-content {
+        background-color: white;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+        text-align: center;
+    }
+    .close {
+        color: red;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .image-modal {
+        display: none;
+        position: fixed;
+        z-index: 10;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.8);
+        justify-content: center;
+        align-items: center;
+    }
+    .image-modal img {
+        max-width: 90%;
+        max-height: 90%;
+        border: 5px solid white;
+        border-radius: 10px;
+    }
+    .social-proof {
+        position: fixed;
+        left: 20px;
+        bottom: -100px;
+        z-index: 9999;
+        background-color: #ffffff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        transition: bottom 0.5s ease;
+        max-width: 300px;
+    }
+    .social-proof .main {
+        display: flex;
+        align-items: center;
+    }
+    .social-proof img {
+        width: 50px;
+        height: 50px;
+        border-radius: 6px;
+        object-fit: cover;
+        margin-right: 10px;
+    }
+    .social-proof .text p {
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.3;
+    }
+    .social-proof .text .font-bold {
+        font-weight: bold;
+    }
+    .social-proof .verified {
+        font-size: 12px;
+        color: gray;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .social-proof .verified img {
+        width: 14px;
+        height: 14px;
+    }
+
+    /* LED Scroller */
+    .led-scroller {
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        box-sizing: border-box;
+        padding: 10px 0;
+        color: #0f0;
+        background-color: black;
+        font-weight: bold;
+        font-size: 25px;
+        text-shadow: 0 0 5px #0f0, 0 0 10px #0f0;
+        margin-top: 15px;
+        text-align: center;
+
+        /* Tambahan animasi outline */
+        position: relative;
+        border: 4px solid transparent;
+        border-radius: 5px;
+        background-clip: padding-box;
+        box-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+        animation: outline-glow 1.5s infinite alternate;
+    }
+
+    @keyframes outline-glow {
+        0% {
+            box-shadow: 0 0 5px #0f0, 0 0 10px #0f0, inset 0 0 5px #0f0;
+        }
+        50% {
+            box-shadow: 0 0 15px #0f0, 0 0 30px #0f0, inset 0 0 10px #0f0;
+        }
+        100% {
+            box-shadow: 0 0 5px #0f0, 0 0 10px #0f0, inset 0 0 5px #0f0;
+        }
+    }
+
+    .led-scroller::before {
+        content: '';
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        right: -4px;
+        bottom: -4px;
+        border-radius: 8px;
+        padding: 2px;
+        background: linear-gradient(90deg, #0f0, #00f, #0f0, #0ff, #0f0);
+        background-size: 300% 300%;
+        animation: borderRun 4s linear infinite;
+        z-index: -1;
+        mask-image: linear-gradient(#fff 0 0);
+        -webkit-mask-image: linear-gradient(#fff 0 0);
+    }
+
+    @keyframes borderRun {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .led-scroller span {
+        display: inline-block;
+        padding-left: 100%;
+    }
+
+    .scroll-animation {
+        animation: scroll-left 10s linear forwards;
+    }
+
+    @keyframes scroll-left {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(-100%);
+        }
+    }
+</style>
+</head>
+<body>
+<video autoplay muted loop class="video-background">
+    <source src="https://files.catbox.moe/horbv5.mp4" type="video/mp4">
+    ArulzXD Digital Marketplace
+</video>
+
+<br><header><h1>DAFTAR PRODUK</h1></header><br>
+
+<!-- LED Scroller -->
+<div class="led-scroller">
+    <span id="ledScrollText">🎁 Promo Spesial Hari Ini!</span>
+</div>
+
+<div class="menu">
+    <a href="index.html" class="menu-item">Home</a>
+    <a href="testi.html" class="menu-item">Testimoni</a>
+    <a href="sosmed.html" class="menu-item">Sosmed</a>
+    <a href="credits.html" class="menu-item">Credits</a>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px;">
+
+  <!-- Produk 1 --> 
+<div style="flex: 1 1 300px; max-width: 45%; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.2); outline: 3px solid #ccc; outline-offset: -3px;">
+    <img src="https://files.catbox.moe/g7m44v.png" alt="Akun COC TH 11" style="width: 100%; cursor: pointer;">
+    <div style="padding: 15px;">
+      <h3>AKUN COC TH 11</h3>
+      <p><del style="color: grey;">Rp. 40.000</del> <span style="color: red;">20%</span></p>
+      <p style="font-weight: bold; color: crimson;">SOLDOUT</p>
+      <a href="checkout.html?produk=Akun+COC+TH+11&harga=0&deskripsi=TH+11+SEMI+MAX&gambar1=https://files.catbox.moe/g7m44v.png&gambar2=https://files.catbox.moe/pfb75z.png&gambar3=https://files.catbox.moe/6aen8p.png&gamber4=https://files.catbox.moe/ss7nvh.png" class="button">Beli Sekarang</a>
+    </div>
+  </div>
+
+  <!-- Produk 2 -->
+  <div style="flex: 1 1 300px; max-width: 45%; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.2); outline: 3px solid #ccc; outline-offset: -3px;">
+    <img src="https://files.catbox.moe/h4ncum.png" alt="Script Bot Auto Order" style="width: 100%; cursor: pointer;">
+    <div style="padding: 15px;">
+      <h3>AKUN COC TH 9</h3>
+      <p><del style="color: grey;">Rp. 20.000</del> <span style="color: red;">2%</span></p>
+      <p style="font-weight: bold; color: crimson;">SOLDOUT</p>
+      <a href="checkout.html?produk=Akun+COC+TH+9&harga=0&deskripsi=TH+9+SEMI+MAX&gambar1=https://files.catbox.moe/h4ncum.png&gambar2=https://files.catbox.moe/wi57tw.png&gambar3=https://files.catbox.moe/vczfbq.png" class="button">Beli Sekarang</a>
+    </div>
+  </div>
+
+  <!-- Produk 3 -->
+  <div style="flex: 1 1 300px; max-width: 45%; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.2); outline: 3px solid #ccc; outline-offset: -3px;">
+    <img src="https://files.catbox.moe/1fepyf.jpg" alt="Script Bot Auto Order" style="width: 100%; cursor: pointer;">
+    <div style="padding: 15px;">
+      <h3>PLP STOCK AKUN</h3>
+      <p><del style="color: grey;">Rp. 5.000</del> <span style="color: red;">60%</span></p>
+      <p style="font-weight: bold; color: crimson;">Rp. 2.000</p>
+      <a href="checkout.html?produk=PLP+STOCK+AKUN&harga=2000&deskripsi=PLP+STOCK+AKUN+ADMIN,+BISA+FULL+EDIT&gambar1=https://files.catbox.moe/1fepyf.jpg&gambar2=https://files.catbox.moe/eufaxk.png&gambar3=https://files.catbox.moe/ky58sn.png" class="button">Beli Sekarang</a>
+    </div>
+  </div>
+
+  <!-- Produk 4 -->
+  <div style="flex: 1 1 300px; max-width: 45%; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.2); outline: 3px solid #ccc; outline-offset: -3px;">
+    <img src="https://files.catbox.moe/txgsp2.png" alt="Script Bot Auto Order" style="width: 100%; cursor: pointer;">
+    <div style="padding: 15px;">
+      <h3>JASA BIKIN LOGO</h3>
+      <p><del style="color: grey;">Rp. 15.000</del> <span style="color: red;">70%</span></p>
+      <p style="font-weight: bold; color: crimson;">Rp. 5.000</p>
+      <a href="checkout.html?produk=JASA+BIKIN+LOGO&harga=5000&deskripsi=JASA+BIKIN+LOGO,+SESUI+REQUEST&gambar1=https://files.catbox.moe/txgsp2.png&gambar2=https://files.catbox.moe/dtx9hz.png" class="button">Beli Sekarang</a>
+    </div>
+  </div>
+
+  <!-- Produk 5 -->
+  <div style="flex: 1 1 300px; max-width: 45%; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.2); outline: 3px solid #ccc; outline-offset: -3px;">
+    <img src="https://files.catbox.moe/g5jzo4.jpg" alt="Script Bot Auto Order" style="width: 100%; cursor: pointer;">
+    <div style="padding: 15px;">
+      <h3>PLP FEE ADMIN</h3>
+      <p><del style="color: grey;">Rp. 5.000</del> <span style="color: red;">50%</span></p>
+      <p style="font-weight: bold; color: crimson;">Rp. 2.500</p>
+      <a href="checkout.html?produk=PLP+FEE+ADMIN&harga=2500&deskripsi=PLP+LIST+REKBER+(+FEE+ADMIN+)+BISA+EDIT+PLP+SENDIRI+DAN+AKSES+FULL+EDIT&gambar1=https://files.catbox.moe/g5jzo4.jpg&gambar2=https://files.catbox.moe/6abrn0.png" class="button">Beli Sekarang</a>
+    </div>
+  </div>
+
+  <!-- Produk 6 -->
+  <div style="flex: 1 1 300px; max-width: 45%; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.2); outline: 3px solid #ccc; outline-offset: -3px;">
+    <img src="https://files.catbox.moe/j4598d.png" alt="Script Bot Auto Order" style="width: 100%; cursor: pointer;">
+    <div style="padding: 15px;">
+      <h3>AKUN COC TH10</h3>
+      <p><del style="color: grey;">Rp. 40.000</del> <span style="color: red;">10%</span></p>
+      <p style="font-weight: bold; color: crimson;">Rp. 30.000</p>
+      <a href="checkout.html?produk=AKUN+COC+TH+10&harga=30000&deskripsi=%D8%A8%D9%90%D8%B3%D9%92%D9%85%D9%90+%D8%A7%D9%84%D9%84%D9%8E%D9%91%D9%87%D9%90+%D8%A7%D9%84%D8%B1%D9%8E%D8%AD%D9%92%D9%85%D9%8E%D9%86%D9%90+%D8%A7%D9%84%D8%B1%D9%8E%D8%AD%D9%90%D9%8A%D9%85%D9%90%0ATH+10%0A%E2%80%A2+BEKAS+TH+9+MAX%0A%E2%80%A2+BANGUNAN+JUGA+ADA+YANG+MAX%0A%E2%80%A2+TUKANG+5%0A%E2%80%A2+SKIN+%3A+1%0A%E2%80%A2+SKIL+EPIK+%3A+ON+3+%28+Bola%2C+Panah+Es%2C+Sepatu+Elektrik%29%0A%E2%80%A2+CN+500%0A%E2%80%A2+GEMS+SAAT+INI+%3A+300%2B%0A%E2%80%A2+PROTEK+OFF%0A%E2%80%A2+BISA+CEIN&gambar1=https://files.catbox.moe/j4598d.png&gambar2=https://files.catbox.moe/efnfpw.png&gambar3=https://files.catbox.moe/fx2xz4.png&gambar4=https://files.catbox.moe/snmccn.png" class="button">Beli Sekarang</a>
+    </div>
+  </div>
+
+<div id="imageModal" class="image-modal" onclick="this.style.display='none'">
+    <img id="modalImage" src="" alt="Preview">
+</div>
+
+<div class="social-proof" id="socialProofId-1">
+    <div class="main">
+        <img src="https://files.catbox.moe/g7m44v.png" alt="AKUN COC TH 11 SEMI MAX">
+        <div class="text">
+            <p><span class="font-bold">Dia</span> membeli</p>
+            <p class="font-bold product_name">AKUN COC TH11 SEMI MAX</p>
+            <span class="verified">
+                <img src="https://cloudfast.biz.id/assets/images/icon/verified.png" alt="verified icon">
+                Verified by <span class="app_name">ArulzXD Digital Marketplace</span>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="social-proof" id="socialProofId-2">
+    <div class="main">
+        <img src="https://files.catbox.moe/h4ncum.png" alt="AKUN COC TH 9">
+        <div class="text">
+            <p><span class="font-bold">Iyun</span> membeli</p>
+            <p class="font-bold product_name">AKUN COC TH 9 SEMI MAX</p>
+            <span class="verified">
+                <img src="https://cloudfast.biz.id/assets/images/icon/verified.png" alt="verified icon">
+                Verified by <span class="app_name">ArulzXD Digital Marketplace</span>
+            </span>
+        </div>
+    </div>
+</div>
+
+<script>
+// Modal Preview Gambar
+const modal = document.getElementById("imageModal");
+const modalImg = document.getElementById("modalImage");
+const productImages = document.querySelectorAll(".product-image");
+
+productImages.forEach(img => {
+    img.addEventListener("click", () => {
+        modal.style.display = "flex";
+        modalImg.src = img.src;
+    });
+});
+
+// Social Proof
+let currentProof = 1;
+const totalProof = 30;
+const showDuration = 5000;
+const delayBetween = 5000;
+
+function showSocialProof() {
+    const id = `#socialProofId-${currentProof}`;
+    const element = document.querySelector(id);
+    if (element) {
+        element.style.bottom = "20px";
+        setTimeout(() => {
+            element.style.bottom = "-100px";
+            currentProof++;
+            if (currentProof > totalProof) currentProof = 1;
+            setTimeout(showSocialProof, delayBetween);
+        }, showDuration);
+    }
+}
+setTimeout(showSocialProof, 5000);
+
+// LED SCROLLER
+const ledScrollTextElement = document.getElementById("ledScrollText");
+        const ledMessages = [
+    "🔰 Selamat Datang Di Toko Arulz-XD Digital Marketplace",
+    "⬇️ Berikut Produk Yang Di jual Arulz",
+    "📌 Cek Speck Di Status pembelian",
+    "⚡ Semua Produk Bergaransi 0 - 15 hari Setelah pembelian",
+    "💬 Testimoni real dari pembeli!"
+];
+
+let ledCurrentMessage = 0;
+
+function playLedAnimation() {
+    ledScrollTextElement.textContent = ledMessages[ledCurrentMessage];
+    ledScrollTextElement.classList.remove("scroll-animation");
+    void ledScrollTextElement.offsetWidth;
+    ledScrollTextElement.classList.add("scroll-animation");
+}
+
+ledScrollTextElement.addEventListener("animationend", () => {
+    ledCurrentMessage = (ledCurrentMessage + 1) % ledMessages.length;
+    playLedAnimation();
+});
+
+playLedAnimation();
+
+// Highlight menu aktif berdasarkan URL
+document.querySelectorAll('.menu-item').forEach(link => {
+    const page = window.location.pathname.split("/").pop();
+    const href = link.getAttribute("href");
+
+    if (href === page || (page === "" && href === "index.html")) {
+        link.classList.add("active");
+    } else {
+        link.classList.remove("active");
+    }
+});
+</script>
+
+</body>
+</html>
