@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Checkout Produk</title>
-  <link rel="icon" type="image/png" href="https://files.catbox.moe/nbsldh.png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <style>
     body {
@@ -20,18 +19,9 @@
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    h2 {
-      text-align: center;
-      color: #333;
-    }
-    .form-group {
-      margin-bottom: 15px;
-    }
-    label {
-      font-weight: bold;
-      display: block;
-      margin-bottom: 6px;
-    }
+    h2 { text-align: center; color: #333; }
+    .form-group { margin-bottom: 15px; }
+    label { font-weight: bold; display: block; margin-bottom: 6px; }
     input[type="text"], select {
       width: 100%;
       padding: 10px;
@@ -52,35 +42,6 @@
     button:hover, .home-button:hover {
       background-color: #218838;
     }
-    .payment-icons {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      margin-top: 8px;
-    }
-    .payment-icons img {
-      height: 45px;
-      background: white;
-      border-radius: 8px;
-      padding: 4px;
-      border: 1px solid #ddd;
-    }
-    .order-summary {
-      margin-top: 20px;
-      border-top: 1px solid #ccc;
-      padding-top: 10px;
-    }
-    .summary-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    .summary-table td {
-      padding: 8px 0;
-    }
-    .total-row td {
-      border-top: 2px solid #000;
-      font-weight: bold;
-    }
     .quantity-group {
       display: flex;
       gap: 10px;
@@ -91,78 +52,11 @@
       padding: 8px;
       font-size: 18px;
     }
-
-    .produk-swiper {
-      width: 100%;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      margin-bottom: 10px;
-    }
-
-    .swiper-slide {
-      text-align: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .swiper-slide img {
-      width: 100%;
-      height: auto;
-      object-fit: contain;
-      border-radius: 10px;
-      pointer-events: none;
-      user-select: none;
-    }
-
-    .confirm-content {
-      background: white;
-      margin: 10% auto;
-      padding: 20px;
-      max-width: 400px;
-      border-radius: 10px;
-    }
-
-    .confirm-content table {
-      width: 100%;
-      margin-bottom: 20px;
-    }
-
-    .confirm-content td {
-      padding: 6px 0;
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 9999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.8);
-    }
   </style>
 </head>
 <body>
   <div class="container">
     <h2>Checkout Produk</h2>
-
-    <div class="form-group">
-      <label>Geser Gambar Untuk Melihat Speck</label>
-      <div class="swiper produk-swiper">
-        <div class="swiper-wrapper" id="swiper-wrapper">
-          <!-- Gambar akan diisi via JS -->
-        </div>
-        <div class="swiper-pagination"></div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label>Deskripsi Produk</label>
-      <div id="deskripsi" style="white-space: pre-line; font-family: sans-serif; background: #f1f1f1; padding: 10px; border-radius: 6px;"></div>
-    </div>
 
     <form id="checkoutForm">
       <div class="form-group">
@@ -178,24 +72,14 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="harga">Harga</label>
+        <label for="harga">Harga Satuan</label>
         <input type="text" id="harga" name="harga" readonly />
       </div>
       <div class="form-group">
         <label for="metode">Metode Pembayaran</label>
         <select id="metode" name="metode" required>
-          <option value="">Pilih Metode</option>
-          <option value="DANA">DANA</option>
-          <option value="OVO">OVO</option>
-          <option value="GoPay">GoPay</option>
-          <option value="QRIS">QRIS</option>
+          <option value="">Memuat metode...</option>
         </select>
-        <div class="payment-icons">
-          <img src="https://i.imgur.com/jyUJkaa.jpeg" alt="DANA" />
-          <img src="https://i.imgur.com/eyKiIrk.jpeg" alt="OVO" />
-          <img src="https://i.imgur.com/2bUZpBK.jpeg" alt="GoPay" />
-          <img src="https://i.imgur.com/WXDsDdx.jpeg" alt="QRIS" style="height: 40px;" />
-        </div>
       </div>
       <div class="form-group">
         <label for="nama">Nama Pembeli</label>
@@ -206,151 +90,103 @@
         <input type="text" id="wa" name="wa" placeholder="08xxxxxxxxxx" required />
       </div>
 
-      <div class="order-summary">
-        <table class="summary-table">
-          <tr>
-            <td>Subtotal</td>
-            <td id="subtotal">Rp0</td>
-          </tr>
-          <tr>
-            <td>Pajak (0.5%)</td>
-            <td id="pajak">Rp0</td>
-          </tr>
-          <tr class="total-row">
-            <td>Total</td>
-            <td id="total">Rp0</td>
-          </tr>
-        </table>
+      <div class="form-group">
+        <label>Total</label>
+        <input type="text" id="total" name="total" readonly />
       </div>
 
-      <button type="submit">Kirim Pesanan via WhatsApp</button>
+      <button type="submit">Lanjutkan Pembayaran</button>
     </form>
-    <a href="index.html"><button class="home-button">Kembali ke Beranda</button></a>
   </div>
 
-  <!-- Modal Konfirmasi -->
-  <div id="confirmModal" class="modal">
-    <div class="confirm-content">
-      <h3>Konfirmasi Pesanan</h3>
-      <table>
-        <tr><td>Produk</td><td id="c-produk"></td></tr>
-        <tr><td>Jumlah</td><td id="c-jumlah"></td></tr>
-        <tr><td>Total</td><td id="c-total"></td></tr>
-        <tr><td>Nama</td><td id="c-nama"></td></tr>
-        <tr><td>WhatsApp</td><td id="c-wa"></td></tr>
-        <tr><td>Pembayaran</td><td id="c-metode"></td></tr>
-      </table>
-      <button id="lanjutBtn">Confrim</button>
-      <button onclick="document.getElementById('confirmModal').style.display='none'">Batal</button>
-    </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
+    // 🔑 GANTI DENGAN API KEY MILIKMU
+    const API_KEY = "VPedia_5n49b5u2swjpryyl";
+
     const params = new URLSearchParams(window.location.search);
     const produk = params.get("produk") || "Produk Tidak Diketahui";
     const hargaProduk = parseInt(params.get("harga") || "0");
-    const deskripsi = params.get("deskripsi") || "Deskripsi tidak tersedia.";
-    const decodedDeskripsi = decodeURIComponent(deskripsi);
-
-    const spekGambar = [];
-    for (let i = 1; i <= 5; i++) {
-      const g = params.get("gambar" + i);
-      if (g) spekGambar.push(g);
-    }
 
     let jumlah = 1;
     const pajakPersen = 0.005;
 
-    const pajak = () => Math.round((hargaProduk * jumlah) * pajakPersen);
-    const total = () => (hargaProduk * jumlah + pajak());
+    function hitungTotal() {
+      const subtotal = hargaProduk * jumlah;
+      const pajak = Math.round(subtotal * pajakPersen);
+      const total = subtotal + pajak;
+      return total;
+    }
 
-    const updateHarga = () => {
-      document.getElementById("subtotal").textContent = "Rp" + (hargaProduk * jumlah).toLocaleString();
-      document.getElementById("pajak").textContent = "Rp" + pajak().toLocaleString();
-      document.getElementById("total").textContent = "Rp" + total().toLocaleString();
-    };
+    function updateHarga() {
+      document.getElementById("jumlah").value = jumlah;
+      document.getElementById("harga").value = "Rp" + hargaProduk.toLocaleString();
+      document.getElementById("total").value = "Rp" + hitungTotal().toLocaleString();
+    }
 
+    // Set produk
     document.getElementById("produk").value = produk;
-    document.getElementById("harga").value = "Rp" + hargaProduk.toLocaleString();
-    document.getElementById("deskripsi").textContent = decodedDeskripsi;
     updateHarga();
 
-    document.getElementById("tambah").onclick = () => {
-      jumlah++;
-      document.getElementById("jumlah").value = jumlah;
-      updateHarga();
-    };
-    document.getElementById("kurang").onclick = () => {
-      if (jumlah > 1) {
-        jumlah--;
-        document.getElementById("jumlah").value = jumlah;
-        updateHarga();
-      }
-    };
+    document.getElementById("tambah").onclick = () => { jumlah++; updateHarga(); };
+    document.getElementById("kurang").onclick = () => { if (jumlah > 1) { jumlah--; updateHarga(); } };
 
-    // Generate slider image HTML
-    const wrapper = document.getElementById("swiper-wrapper");
-    wrapper.innerHTML = spekGambar.map(src =>
-      `<div class="swiper-slide"><img src="${src}" alt="Gambar Produk" /></div>`
-    ).join("");
+    // Ambil metode pembayaran dari API
+    async function ambilMetodeBayar() {
+      const res = await fetch("https://v-pedia.web.id/deposit/metode", {
+        headers: { "X-APIKEY": API_KEY }
+      });
 
-    // Init swiper tanpa autoplay
-    const swiper = new Swiper(".produk-swiper", {
-      loop: true,
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-    });
+      const hasil = await res.json();
+      const select = document.getElementById("metode");
+      select.innerHTML = '<option value="">Pilih Metode</option>';
 
-    function getTransferInfo(metode) {
-      switch (metode) {
-        case "DANA": return "083171080910 a.n. Arulz";
-        case "OVO": return "083171080910 a.n. Arulzz";
-        case "GoPay": return "083171080910 a.n. Arulz";
-        case "QRIS": return "Belum tersedia";
-        default: return "-";
+      if (hasil.status && Array.isArray(hasil.data)) {
+        hasil.data.forEach(m => {
+          const option = document.createElement("option");
+          option.value = m.kode;
+          option.textContent = `${m.nama} (${m.kode})`;
+          select.appendChild(option);
+        });
+      } else {
+        select.innerHTML = '<option value="">Gagal memuat metode</option>';
       }
     }
 
-    document.getElementById("checkoutForm").addEventListener("submit", function (e) {
+    ambilMetodeBayar();
+
+    // Proses submit form
+    document.getElementById("checkoutForm").addEventListener("submit", async function (e) {
       e.preventDefault();
+
       const nama = document.getElementById("nama").value;
       const wa = document.getElementById("wa").value;
       const metode = document.getElementById("metode").value;
 
-      // Isi data di modal
-      document.getElementById("c-produk").textContent = produk;
-      document.getElementById("c-jumlah").textContent = jumlah + " pcs";
-      document.getElementById("c-total").textContent = "Rp" + total().toLocaleString();
-      document.getElementById("c-nama").textContent = nama;
-      document.getElementById("c-wa").textContent = wa;
-      document.getElementById("c-metode").textContent = metode;
+      const nominal = hitungTotal();
+      const reff_id = "INV-" + Date.now();
 
-      document.getElementById("confirmModal").style.display = "block";
+      const payload = new URLSearchParams({
+        api_key: API_KEY,
+        reff_id: reff_id,
+        nominal: nominal,
+        type: "ewallet", // atau bisa dynamic tergantung metode
+        metode: metode
+      });
 
-      document.getElementById("lanjutBtn").onclick = () => {
-        const message =
-`*📦 Formulir Checkout 📦*%0A` +
-`==============================%0A` +
-`Produk              : ${produk}%0A` +
-`Jumlah              : ${jumlah} pcs%0A` +
-`Harga Satuan  : Rp${hargaProduk.toLocaleString()}%0A` +
-`Subtotal           : Rp${(hargaProduk * jumlah).toLocaleString()}%0A` +
-`Pajak (0.5%)    : Rp${pajak().toLocaleString()}%0A` +
-`Total                 : Rp${total().toLocaleString()}%0A` +
-`==============================%0A` +
-`Nama                : ${nama}%0A` +
-`WhatsApp         : ${wa}%0A` +
-`Metode Bayar  : ${metode}%0A` +
-`Transfer ke       : ${getTransferInfo(metode)}`;
+      const res = await fetch("https://v-pedia.web.id/deposit/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: payload
+      });
 
-        const phoneNumber = "6283131450473";
-        const waURL = `https://wa.me/${phoneNumber}?text=${message}`;
-        window.open(waURL, "_blank");
-        document.getElementById("confirmModal").style.display = "none";
-      };
+      const hasil = await res.json();
+
+      if (hasil.status) {
+        alert("Transaksi berhasil dibuat. Anda akan diarahkan ke halaman pembayaran.");
+        window.location.href = hasil.data.url;
+      } else {
+        alert("Gagal membuat transaksi: " + hasil.message);
+      }
     });
   </script>
 </body>
